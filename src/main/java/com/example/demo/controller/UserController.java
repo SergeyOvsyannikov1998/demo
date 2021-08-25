@@ -37,10 +37,9 @@ public class UserController {
 
     @PostMapping()
     public String create(@ModelAttribute("user") User user) {
-        System.out.println(user.getFirstName());
-        System.out.println(user.getLastName());
-        System.out.println(user.getAge());
-
+        user.getFirstName();
+        user.getLastName();
+        user.getAge();
         userService.addUser(user);
         return "redirect:/admin";
     }

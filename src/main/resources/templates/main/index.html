@@ -19,6 +19,7 @@
             <td width="10%" th:text="${user.getFirstName()}"></td>
             <td width="10%" th:text="${user.getLastName()}"></td>
             <td width="10%" th:text="${user.getAge()}"></td>
+            <td width="10%" th:text="${user.getPassword()}"></td>
             <td width="10%"><a th:href="@{|/admin/edit/${user.getId()}|}">Edit</a></td>
             <td width="10%"><a th:href="@{|/admin/remove/${user.getId()}|}">Remove</a></td>
         </tr>

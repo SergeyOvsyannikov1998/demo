@@ -46,12 +46,12 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public User getUserByName(String name) {
-        return userDao.getUserByFirstName(name);
+        return userDao.getUserByFirstNam(name);
     }
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
 
-        return userDao.getUserByFirstName(s);
+        return userDao.getUserByFirstNam(s);
     }}
 
