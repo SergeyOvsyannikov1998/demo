@@ -1,16 +1,118 @@
 <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ru">
 <html lang="en">
 <head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
+
+    <title>preproject-2.3.1</title>
 </head>
 <body>
-<br>
-<p th:text="${user.getFirstName()}">VALUE</p>
-<p th:text="${user.getLastName()}">VALUE</p>
-<p th:text="${user.getRoles()}">VALUE</p>
-<p th:text="${user.getPassword()}">VALUE</p>
-<p th:text="${user.getAge()}">VALUE</p>
-<a th:href="@{/logout}">Logout</a>
+<header>
+    <div class="container-fluid bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+            <a class="navbar-brand text-white" href="#"><h5><span sec:authentication="name"></span></h5></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active text-white">
+
+                        <h5>with roles:
+                            <span sec:authorize="hasAnyRole('ROLE_ADMIN')">
+                                ROLE_ADMIN
+                            </span>
+                            <span sec:authorize="hasAnyRole('ROLE_USER')">
+                                ROLE_USER
+                            </span>
+                        </h5>
+                    </li>
+                </ul>
+                <a class="nav-link text-white-50" href="http://localhost:8080/login" style="margin-left: 65%">Logout</a>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2">
+            <div class="d-flex flex-column flex-shrink-0 p-10 bg-light">
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item">
+                        <a href="/admin" class="nav-link link-dark" aria-current="page">
+                            <svg class="bi me-2" width="16" height="16">
+                                <use xlink:href="#home"></use>
+                            </svg>
+                            Admin
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/user" class="nav-link active">
+                            <svg class="bi me-2" width="16" height="16">
+                                <use xlink:href="#speedometer2"></use>
+                            </svg>
+                            User
+                        </a>
+
+                </ul>
+                <hr>
+            </div>
+        </div>
+        <div class="col-10 p-5 mb-2 bg-light">
+            <h1>User information-page</h1>
+            <div class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <b>About User</b>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th> Id</th>
+                                <th> Name</th>
+                                <th> Surname</th>
+                                <th> Age</th>
+                                <th> Email</th>
+                                <th> Login</th>
+                                <th> Password</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="user : ${users}">
+                                <td th:text="${user.getId()}"></td>
+                                <td th:text="${user.getName()}"></td>
+                                <td th:text="${user.getSurname()}"></td>
+                                <td th:text="${user.getAge()}"></td>
+                                <td th:text="${user.getEmail()}"></td>
+                                <td th:text="${user.getLogin()}"></td>
+                                <td th:text="${user.getPassword()}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

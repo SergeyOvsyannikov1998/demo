@@ -10,16 +10,27 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String firstName;
+    @Column(name = "name")
+    private String name;
 
-    private String lastName;
+    @Column(name = "surname")
+    private String surname;
 
-    private byte age;
+    @Column(name = "age")
+    private int age;
 
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "login", unique = true)
+    private String login;
+
+    @Column(name = "password")
     private String password;
 
 
@@ -29,14 +40,21 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
-    public User() {
+
+
+
+    public User(String login, String password, String name, String surname, int age, String email, Set<Role> roles) {
+        this.login = login;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.age = age;
+        this.email = email;
+        this.roles = roles;
     }
 
-    public User(String firstName, String lastName, byte age, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-        this.password = password;
+    public User() {
+
     }
 
     public void setRoles(Set<Role> roles) {
@@ -46,32 +64,51 @@ public class User implements UserDetails {
         return roles;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
-    public byte getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(byte age) {
+    public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public void setPassword(String password) {
@@ -90,7 +127,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return firstName;
+        return login;
     }
 
     @Override
@@ -115,14 +152,15 @@ public class User implements UserDetails {
 
     @Override
     public String toString() {
-        return "\n\n User:" +
+        return "User{" +
                 "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
                 ", age=" + age +
-                ", roles=" + roles+"\n\n" ;
+                ", email='" + email + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
     }
-
-
 }
