@@ -1,65 +1,40 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Entity
+@Data
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String roleName;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles")
+    @JsonBackReference
+    private List<User> users;
 
-    private String role;
-
-    @ManyToMany
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private Set<User> users = new HashSet<>();
-
-
-    public Role(){}
-    public Role(String role){
-        this.role=role;
+    public Role() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Role(String roleName) {
+        this.roleName = roleName;
     }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setUsers(Set<User> set) {
-        this.users = users;
-    }
-
-    public Set<User> getUsers() {
-        return users;
+    @Override
+    @JsonIgnore
+    public String getAuthority() {
+        return roleName;
     }
 
     @Override
     public String toString() {
-        return role;
-    }
-
-    @Override
-    public String getAuthority() {
-        return role;
+        return roleName;
     }
 }
